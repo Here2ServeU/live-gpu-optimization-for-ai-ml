@@ -1,0 +1,84 @@
+# GPU Optimization for AI-ML Systems · Free Live Sessions
+
+Make AI models faster and cheaper to run, and prove it with numbers.
+
+Free, live, 30-minute sessions with **Dr. Emmanuel Naweji** ([Transformed 2 Succeed](https://transformed2succeed.com)).
+This course is presented on **Week 3, Thursday at 7:30 PM Central** of a 4-week rotation (8 courses, every Monday and Thursday).
+This repo holds the slides, the recording of every live session, and the notes and links from each one.
+
+## Session recordings
+
+| Date | Recording | Notes |
+|---|---|---|
+| _First session coming soon_ | | |
+<!-- sessions:end -->
+
+## What the session covers
+
+1. **Measure Before You Optimize**: Cost per 1M tokens, compute vs memory-bound, and a before-and-after you can prove.
+2. **Shrink the Model**: Quantize, distill, prune and route, with quality measured on your own eval set.
+3. **Serve It Smarter**: KV cache math, paged attention and continuous batching: more users per GPU.
+
+## Three things to remember
+
+- **Measure before you optimize**: Cost per 1M tokens, the real bottleneck, and one change, re-measured.
+- **Shrink the model, not the quality**: Per-channel quantization, distill, prune, route. Always a quality number.
+- **Serve it smarter**: Size the KV cache, page it, batch continuously: 3x capacity, same GPU.
+
+## Try it yourself
+
+Clone the course lab repo: [gpu-ai-optimization](https://github.com/Here2ServeU/gpu-ai-optimization)
+
+**Module 1 · Measure Before You Optimize**: Compute-bound or memory-bound?
+
+```bash
+python3 bottleneck.py --params 8e9 --precision fp16 --gpu L4
+python3 bottleneck.py --params 8e9 --precision int8 --gpu L4
+```
+**Module 2 · Shrink the Model**: Turn the precision dial
+
+```bash
+python3 data/make_data.py
+python3 quantize.py
+```
+**Module 3 · Serve It Smarter**: How many users fit on one GPU?
+
+```bash
+python3 kv_calc.py --model llama-3-8b --context 8192 --users 32
+python3 kv_calc.py --compare --gpu A100-80GB --context 4096
+```
+
+## Slides
+
+[`slides/06_GPU_Optimization_for_AI_ML_Systems_Free_Live_Session.pptx`](slides/06_GPU_Optimization_for_AI_ML_Systems_Free_Live_Session.pptx): the presenter deck, with full speaker notes.
+
+## Free live session schedule (Mondays and Thursdays, 7:30 PM Central)
+
+| Week | Day | Course |
+|---|---|---|
+| Week 1 | Monday | [Linux for AI-ML Systems](https://github.com/Here2ServeU/live-linux-for-ai-ml) |
+| Week 1 | Thursday | [Python for AI-ML](https://github.com/Here2ServeU/live-python-for-ai-ml) |
+| Week 2 | Monday | [Zero to AI-ML Systems Engineering](https://github.com/Here2ServeU/live-zero-to-ai-ml) |
+| Week 2 | Thursday | [DevOps for AI-ML Systems](https://github.com/Here2ServeU/live-devops-for-ai-ml) |
+| Week 3 | Monday | [SRE for AI-ML Systems](https://github.com/Here2ServeU/live-sre-for-ai-ml) |
+| Week 3 | Thursday | **GPU Optimization for AI-ML Systems** (this repo) |
+| Week 4 | Monday | [FinOps for AI-ML Systems](https://github.com/Here2ServeU/live-finops-for-ai-ml) |
+| Week 4 | Thursday | [AI Agent Operations](https://github.com/Here2ServeU/live-ai-agent-operations) |
+
+## Want all of it?
+
+The membership gives you **all 8 courses, every module and every lab, for $49/month**, plus a live session every month where we build something together.
+Join at **https://transformed2succeed.com**.
+
+---
+
+### For the presenter: logging a session
+
+After each live session, run:
+
+```bash
+bash scripts/new-session.sh 2026-11-03 "https://link-to-the-recording"
+git add -A && git commit -m "Session 2026-11-03" && git push
+```
+
+This creates `sessions/2026-11-03.md` from the template (fill in the Q&A and links) and adds a row to the recordings table above.
